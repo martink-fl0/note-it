@@ -98,22 +98,22 @@ app.post("/register", async (req, res) => {
             if (err) {
                 console.log(err);
             } 
-            console.log(`Results: ${results}`);
+            console.log(results.rows);
 
-            // if (results.rows.length > 0) {
-            //     return res.render("register", {errors})
-            // } else {
-            //     pool.query(
-            //         "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, password", [email, hashedPassword], (err, results) => {
-            //             if (err) {
-            //                 console.log(err);
-            //             }
-            //             console.log(results.rows);
-            //             req.flash("success_msg", "You are now registered, please login");
-            //             res.redirect("/login");
-            //         }
-            //     )
-            // }
+            if (results.rows.length > 0) {
+                return res.render("register", {errors})
+            } else {
+                pool.query(
+                    "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, password", [email, hashedPassword], (err, results) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        console.log(results.rows);
+                        req.flash("success_msg", "You are now registered, please login");
+                        res.redirect("/login");
+                    }
+                )
+            }
 
 
         }
