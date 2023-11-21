@@ -98,7 +98,7 @@ app.post("/register", async (req, res) => {
             if (err) {
                 console.log(err);
             } 
-            console.log(results);
+            console.log(`Results: ${results}`);
 
             // if (results.rows.length > 0) {
             //     return res.render("register", {errors})
